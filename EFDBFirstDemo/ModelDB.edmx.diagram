@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="83c4886d461a403a81e57b7c27fd338a" Name="Diagram1">
-        <EntityTypeShape EntityType="school_dbModel.Course" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+      <Diagram DiagramId="846fd571741d452ba32bb2d334109653" Name="Diagram1">
+        <EntityTypeShape EntityType="school_dbModel.Course" Width="1.5" PointX="7.375" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="school_dbModel.Standard" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="school_dbModel.Student" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="school_dbModel.StudentAddress" Width="1.5" PointX="9.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="school_dbModel.Teacher" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="school_dbModel.Student" Width="1.5" PointX="4.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="school_dbModel.StudentAddress" Width="1.5" PointX="7.125" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="school_dbModel.Teacher" Width="1.5" PointX="4.625" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="school_dbModel.View_StudentCourse" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="school_dbModel.FK_Course_Teacher" ManuallyRouted="false" />
         <AssociationConnector Association="school_dbModel.FK_Student_Standard" ManuallyRouted="false" />

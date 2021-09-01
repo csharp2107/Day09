@@ -27,11 +27,11 @@ namespace EFDBFirstDemo
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Standard> Standards { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<StudentAddress> StudentAddresses { get; set; }
-        public virtual DbSet<Teacher> Teachers { get; set; }
+        public virtual DbSet<Course> Course { get; set; }
+        public virtual DbSet<Standard> Standard { get; set; }
+        public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<StudentAddress> StudentAddress { get; set; }
+        public virtual DbSet<Teacher> Teacher { get; set; }
         public virtual DbSet<View_StudentCourse> View_StudentCourse { get; set; }
     
         public virtual ObjectResult<GetCoursesByStudentId_Result> GetCoursesByStudentId(Nullable<int> studentId)

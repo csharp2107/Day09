@@ -17,7 +17,7 @@ namespace EFDBFirstDemo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
         {
-            this.Courses = new HashSet<Course>();
+            this.Course = new HashSet<Course>();
         }
     
         public int StudentID { get; set; }
@@ -28,6 +28,6 @@ namespace EFDBFirstDemo
         public virtual Standard Standard { get; set; }
         public virtual StudentAddress StudentAddress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Course> Course { get; set; }
     }
 }

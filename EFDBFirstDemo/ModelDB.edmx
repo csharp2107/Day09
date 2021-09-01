@@ -58,7 +58,7 @@
           <Property Name="StandardId" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCHOOL_DB.MDF.dbo.View_StudentCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'C:\USERS\MWITKOWSKI\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCHOOL_DB.MDF.dbo.View_StudentCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_StudentCourse">
           <Key>
             <PropertyRef Name="StudentID" />
@@ -220,7 +220,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
           <Property Name="Location" Type="Geography" />
           <Property Name="TeacherId" Type="Int32" />
           <NavigationProperty Name="Teacher" Relationship="Self.FK_Course_Teacher" FromRole="Course" ToRole="Teacher" />
-          <NavigationProperty Name="Students" Relationship="Self.StudentCourse" FromRole="Course" ToRole="Student" />
+          <NavigationProperty Name="Student" Relationship="Self.StudentCourse" FromRole="Course" ToRole="Student" />
         </EntityType>
         <EntityType Name="Standard">
           <Key>
@@ -229,8 +229,8 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
           <Property Name="StandardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StandardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Students" Relationship="Self.FK_Student_Standard" FromRole="Standard" ToRole="Student" />
-          <NavigationProperty Name="Teachers" Relationship="Self.FK_Teacher_Standard" FromRole="Standard" ToRole="Teacher" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_Standard" FromRole="Standard" ToRole="Student" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher_Standard" FromRole="Standard" ToRole="Teacher" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -242,7 +242,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
           <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Standard" Relationship="Self.FK_Student_Standard" FromRole="Student" ToRole="Standard" />
           <NavigationProperty Name="StudentAddress" Relationship="Self.FK_StudentAddress_Student" FromRole="Student" ToRole="StudentAddress" />
-          <NavigationProperty Name="Courses" Relationship="Self.StudentCourse" FromRole="Student" ToRole="Course" />
+          <NavigationProperty Name="Course" Relationship="Self.StudentCourse" FromRole="Student" ToRole="Course" />
         </EntityType>
         <EntityType Name="StudentAddress">
           <Key>
@@ -262,7 +262,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
           <Property Name="TeacherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StandardId" Type="Int32" />
-          <NavigationProperty Name="Courses" Relationship="Self.FK_Course_Teacher" FromRole="Teacher" ToRole="Course" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Course_Teacher" FromRole="Teacher" ToRole="Course" />
           <NavigationProperty Name="Standard" Relationship="Self.FK_Teacher_Standard" FromRole="Teacher" ToRole="Standard" />
         </EntityType>
         <EntityType Name="View_StudentCourse">
@@ -336,31 +336,31 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
         </Association>
         <EntityContainer Name="school_dbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Courses" EntityType="Self.Course" />
-          <EntitySet Name="Standards" EntityType="Self.Standard" />
-          <EntitySet Name="Students" EntityType="Self.Student" />
-          <EntitySet Name="StudentAddresses" EntityType="Self.StudentAddress" />
-          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Course" EntityType="Self.Course" />
+          <EntitySet Name="Standard" EntityType="Self.Standard" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <EntitySet Name="StudentAddress" EntityType="Self.StudentAddress" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
           <EntitySet Name="View_StudentCourse" EntityType="Self.View_StudentCourse" />
           <AssociationSet Name="FK_Course_Teacher" Association="Self.FK_Course_Teacher">
-            <End Role="Teacher" EntitySet="Teachers" />
-            <End Role="Course" EntitySet="Courses" />
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Course" EntitySet="Course" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_Standard" Association="Self.FK_Student_Standard">
-            <End Role="Standard" EntitySet="Standards" />
-            <End Role="Student" EntitySet="Students" />
+            <End Role="Standard" EntitySet="Standard" />
+            <End Role="Student" EntitySet="Student" />
           </AssociationSet>
           <AssociationSet Name="FK_Teacher_Standard" Association="Self.FK_Teacher_Standard">
-            <End Role="Standard" EntitySet="Standards" />
-            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Standard" EntitySet="Standard" />
+            <End Role="Teacher" EntitySet="Teacher" />
           </AssociationSet>
           <AssociationSet Name="FK_StudentAddress_Student" Association="Self.FK_StudentAddress_Student">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="StudentAddress" EntitySet="StudentAddresses" />
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentAddress" EntitySet="StudentAddress" />
           </AssociationSet>
           <AssociationSet Name="StudentCourse" Association="Self.StudentCourse">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Student" EntitySet="Students" />
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Student" EntitySet="Student" />
           </AssociationSet>
           <FunctionImport Name="GetCoursesByStudentId" ReturnType="Collection(school_dbModel.GetCoursesByStudentId_Result)">
             <Parameter Name="StudentId" Mode="In" Type="Int32" />
@@ -389,7 +389,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="school_dbModelStoreContainer" CdmEntityContainer="school_dbEntities">
-          <EntitySetMapping Name="Courses">
+          <EntitySetMapping Name="Course">
             <EntityTypeMapping TypeName="school_dbModel.Course">
               <MappingFragment StoreEntitySet="Course">
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
@@ -399,7 +399,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Standards">
+          <EntitySetMapping Name="Standard">
             <EntityTypeMapping TypeName="school_dbModel.Standard">
               <MappingFragment StoreEntitySet="Standard">
                 <ScalarProperty Name="StandardId" ColumnName="StandardId" />
@@ -408,7 +408,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Students">
+          <EntitySetMapping Name="Student">
             <EntityTypeMapping TypeName="school_dbModel.Student">
               <MappingFragment StoreEntitySet="Student">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -418,7 +418,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StudentAddresses">
+          <EntitySetMapping Name="StudentAddress">
             <EntityTypeMapping TypeName="school_dbModel.StudentAddress">
               <MappingFragment StoreEntitySet="StudentAddress">
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -429,7 +429,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Teachers">
+          <EntitySetMapping Name="Teacher">
             <EntityTypeMapping TypeName="school_dbModel.Teacher">
               <MappingFragment StoreEntitySet="Teacher">
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
@@ -482,7 +482,7 @@ warning 6002: The table/view 'C:\USERS\KURS\SOURCE\REPOS\DAY09\EFDBFIRSTDEMO\SCH
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
