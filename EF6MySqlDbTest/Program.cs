@@ -14,19 +14,30 @@ namespace EF6MySqlDbTest
             {
                 db.Students.Add(new Student()
                 {
-                    FirstName = "John", LastName = "Smith", SocialNumber="111"
+                    FirstName = "John", LastName = "Smith", SocialNumber="111",
+                    CardNumber = ""
                 });
                 db.Students.Add(new Student()
                 {
                     FirstName = "Elvis",
                     LastName = "Presley",
-                    SocialNumber = "222"
+                    SocialNumber = "222",
+                    CardNumber = ""
                 });
                 db.Students.Add(new Student()
                 {
                     FirstName = "Max",
                     LastName = "Payne",
-                    SocialNumber = "333"
+                    SocialNumber = "333",
+                    CardNumber = ""
+                });
+                db.Students.Add(new Student()
+                {
+                    FirstName = "Ana",
+                    LastName = "Gray",
+                    SocialNumber = "334",
+                    CardNumber = "",
+                    TimeStamp = DateTime.Now
                 });
                 try
                 {
@@ -35,6 +46,7 @@ namespace EF6MySqlDbTest
                     
                 } catch (Exception exc)
                 {
+                    Console.WriteLine(exc.Message);
                     foreach (var item in db.GetValidationErrors())
                     {
                         foreach (var err in item.ValidationErrors)

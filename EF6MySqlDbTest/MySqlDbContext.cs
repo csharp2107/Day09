@@ -27,5 +27,14 @@ namespace EF6MySqlDbTest
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+
+        public override int SaveChanges()
+        {
+            ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is Student );
+            return base.SaveChanges();
+        }
+
     }
 }

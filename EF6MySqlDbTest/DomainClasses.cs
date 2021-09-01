@@ -20,14 +20,23 @@ namespace EF6MySqlDbTest
         public string FirstName { get; set; }
 
         [Index(IsUnique = false)]
-        [Column("LName", Order = 1)]
+        //[MaxLength(255)]
+        [Column("LName", Order = 1, TypeName = "nvarchar")]
         public string LastName { get; set; }
 
+        
+        [Required(AllowEmptyStrings =true)]
+        public string CardNumber { get; set; } // card number for the student
 
         [Index(IsUnique =true)]
         [MaxLength(10, ErrorMessage ="Social number too long")]
         [MinLength(2, ErrorMessage = "Social number too short")]
         public string SocialNumber { get; set; }
+
+        public DateTime TimeStamp { get; set; }
+
+        public DateTime CreateTimeStamp { get; set; }
+        public DateTime UpdateTimeStamp { get; set; }
 
         [NotMapped]
         public int Age { get; set; }
