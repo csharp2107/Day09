@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgeValidationAttribute.cs" />
     <Compile Include="DomainClasses.cs" />
     <Compile Include="MySqlDbContext.cs" />
     <Compile Include="Program.cs" />

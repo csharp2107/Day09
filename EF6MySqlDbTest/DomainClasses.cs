@@ -38,7 +38,8 @@ namespace EF6MySqlDbTest
         public DateTime CreateTimeStamp { get; set; }
         public DateTime UpdateTimeStamp { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
+        [AgeValidation(18, ErrorMessage ="Age must be over 18")]
         public int Age { get; set; }
 
         private int _age;
@@ -51,6 +52,8 @@ namespace EF6MySqlDbTest
     {
         public int TeacherId { get; set; }
         public string FirstName { get; set; }
+        
+        [StringLength(255, MinimumLength =10, ErrorMessage ="Invalid length of LastName field")]
         public string LastName { get; set; }
     }
 

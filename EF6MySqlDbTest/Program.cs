@@ -12,38 +12,51 @@ namespace EF6MySqlDbTest
         {
             using (var db = new MySqlDbContext())
             {
-                db.Students.Add(new Student()
-                {
-                    FirstName = "John", LastName = "Smith", SocialNumber="111",
-                    CardNumber = ""
-                });
-                db.Students.Add(new Student()
-                {
-                    FirstName = "Elvis",
-                    LastName = "Presley",
-                    SocialNumber = "222",
-                    CardNumber = ""
-                });
-                db.Students.Add(new Student()
-                {
-                    FirstName = "Max",
-                    LastName = "Payne",
-                    SocialNumber = "333",
-                    CardNumber = ""
-                });
-                db.Students.Add(new Student()
-                {
-                    FirstName = "Ana",
-                    LastName = "Gray",
-                    SocialNumber = "334",
-                    CardNumber = "",
-                    TimeStamp = DateTime.Now
-                });
+                
                 try
                 {
+                    db.Students.Add(new Student()
+                    {
+                        FirstName = "John",
+                        LastName = "Smith",
+                        SocialNumber = "111",
+                        CardNumber = "", Age = 15
+                    });
+                    db.SaveChanges();
+
+                    db.Students.Add(new Student()
+                    {
+                        FirstName = "Elvis",
+                        LastName = "Presley",
+                        SocialNumber = "222",
+                        CardNumber = ""
+                    });
+                    db.Students.Add(new Student()
+                    {
+                        FirstName = "Max",
+                        LastName = "Payne",
+                        SocialNumber = "333",
+                        CardNumber = ""
+                    });
+                    db.Students.Add(new Student()
+                    {
+                        FirstName = "Ana",
+                        LastName = "Gray",
+                        SocialNumber = "334",
+                        CardNumber = "",
+                        TimeStamp = DateTime.Now
+                    });
+
                     db.SaveChanges();
                     Console.WriteLine("Save done...");
-                    
+
+                    // update one entity of Student
+                    var student = db.Students.Find(1);
+                    student.CardNumber = "12345";
+                    db.Entry(student).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    Console.WriteLine("Update done...");
+
                 } catch (Exception exc)
                 {
                     Console.WriteLine(exc.Message);

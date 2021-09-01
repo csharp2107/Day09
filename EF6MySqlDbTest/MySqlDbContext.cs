@@ -30,9 +30,25 @@ namespace EF6MySqlDbTest
 
         public override int SaveChanges()
         {
-            ChangeTracker
+            // grab Student entities with "added" or "modified" state
+            var entries = ChangeTracker
                 .Entries()
-                .Where(e => e.Entity is Student );
+                .Where(e => e.Entity is Student && 
+                            (e.State==EntityState.Added || e.State==EntityState.Modified ) );
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State==EntityState.Added)
+                {
+                    // insert current date/time to CreateTimeStamp
+                    ((Student)entityEntry.Entity).CreateTimeStamp = DateTime.Now;
+                } else
+                {
+                    // update current date/time to UpdateTimeStamp
+                    ((Student)entityEntry.Entity).UpdateTimeStamp = DateTime.Now;
+                }
+            }
+
+
             return base.SaveChanges();
         }
 
