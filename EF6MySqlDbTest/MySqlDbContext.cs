@@ -18,7 +18,11 @@ namespace EF6MySqlDbTest
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // force name for the entities
+            //modelBuilder.Entity<Student>().ToTable("TableStudents");
+            //modelBuilder.Entity<Teacher>().ToTable("TableTeachers");
+
+            //base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Student> Students { get; set; }
