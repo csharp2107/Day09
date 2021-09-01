@@ -62,6 +62,9 @@ namespace EF6MySqlDbTest
                 // displaying validation errors
                 foreach (var eve in exc.EntityValidationErrors)
                 {
+                    Console.WriteLine("================================");
+                    Student currStudent = ((Student)eve.Entry.Entity);
+                    Console.WriteLine($"Student: {currStudent.FirstName} {currStudent.LastName}");
                     Console.WriteLine($"Type: {eve.Entry.Entity.GetType().Name}, State:{eve.Entry.State}" );
                     foreach (var ve in eve.ValidationErrors)
                     {
