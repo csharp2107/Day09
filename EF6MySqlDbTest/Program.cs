@@ -22,21 +22,19 @@ namespace EF6MySqlDbTest
                         SocialNumber = "111",
                         CardNumber = "", Age = 15
                     });
-                    db.SaveChanges();
 
                     db.Students.Add(new Student()
                     {
                         FirstName = "Elvis",
                         LastName = "Presley",
-                        SocialNumber = "222",
+                        SocialNumber = "2226456362535353645647647567567",
                         CardNumber = ""
                     });
                     db.Students.Add(new Student()
                     {
                         FirstName = "Max",
                         LastName = "Payne",
-                        SocialNumber = "333",
-                        CardNumber = ""
+                        SocialNumber = "333"                        
                     });
                     db.Students.Add(new Student()
                     {
@@ -49,6 +47,18 @@ namespace EF6MySqlDbTest
 
                     db.SaveChanges();
                     Console.WriteLine("Save done...");
+
+                    db.Students.Local.Clear(); // 
+                    // !!! NOT CORRECT - db.Students.RemoveRange(db.Students.ToList()); 
+                    db.Students.Add(new Student()
+                    {
+                        FirstName = "John",
+                        LastName = "Smith",
+                        SocialNumber = "111111",
+                        CardNumber = "",
+                        Age = 21
+                    });
+                    db.SaveChanges();
 
                     // update one entity of Student
                     var student = db.Students.Find(1);

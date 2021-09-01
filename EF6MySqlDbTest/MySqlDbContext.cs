@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,26 +31,45 @@ namespace EF6MySqlDbTest
 
         public override int SaveChanges()
         {
-            // grab Student entities with "added" or "modified" state
-            var entries = ChangeTracker
-                .Entries()
-                .Where(e => e.Entity is Student && 
-                            (e.State==EntityState.Added || e.State==EntityState.Modified ) );
-            foreach (var entityEntry in entries)
+            try
             {
-                if (entityEntry.State==EntityState.Added)
+                // grab Student entities with "added" or "modified" state
+                var entries = ChangeTracker
+                    .Entries()
+                    .Where(e => e.Entity is Student &&
+                                (e.State == EntityState.Added || e.State == EntityState.Modified));
+                foreach (var entityEntry in entries)
                 {
-                    // insert current date/time to CreateTimeStamp
-                    ((Student)entityEntry.Entity).CreateTimeStamp = DateTime.Now;
-                } else
+                    // apply my custom validation
+                    //if (((Student)entityEntry.Entity).Age < 18)
+                    //    throw new Exception("Age under 18");
+
+                    if (entityEntry.State == EntityState.Added)
+                    {
+                        // insert current date/time to CreateTimeStamp
+                        ((Student)entityEntry.Entity).CreateTimeStamp = DateTime.Now;
+                    }
+                    else
+                    {
+                        // update current date/time to UpdateTimeStamp
+                        ((Student)entityEntry.Entity).UpdateTimeStamp = DateTime.Now;
+                    }
+                }
+
+                return base.SaveChanges();
+            } catch (DbEntityValidationException exc)
+            {
+                // displaying validation errors
+                foreach (var eve in exc.EntityValidationErrors)
                 {
-                    // update current date/time to UpdateTimeStamp
-                    ((Student)entityEntry.Entity).UpdateTimeStamp = DateTime.Now;
+                    Console.WriteLine($"Type: {eve.Entry.Entity.GetType().Name}, State:{eve.Entry.State}" );
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine($"--- Property: {ve.PropertyName}, Error: {ve.ErrorMessage}");
+                    }
                 }
             }
-
-
-            return base.SaveChanges();
+            return -1;
         }
 
     }
