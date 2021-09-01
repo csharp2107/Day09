@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EF6MySqlDbTest
 {
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     class MySqlDbContext : DbContext
     {
         public MySqlDbContext() : base("MySqlDemoDb")
