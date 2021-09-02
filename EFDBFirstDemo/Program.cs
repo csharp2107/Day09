@@ -21,8 +21,59 @@ namespace EFDBFirstDemo
         static void Main(string[] args)
         {
             //LoggerData();
-            TransactionsSupport();
+            //TransactionsSupport();
+            //CustomValidation();
+            LazyEagerExplicitLoading();
             Console.ReadKey();
+        }
+
+        private static void LazyEagerExplicitLoading()
+        {
+            using (var ctx = new MyDbContext())
+            {
+                ctx.Database.Log = Console.WriteLine;
+
+                // LAZY LOADING
+                var student1 = ctx.Student.Where(s => s.StudentID == 1).FirstOrDefault<Student>();
+                if (student1!=null)
+                {
+                    if (student1.StudentAddress!=null)
+                        Console.WriteLine(student1.StudentAddress.City);
+                }
+
+                // EAGER LOADING
+                Console.WriteLine("=================================");
+                student1 = ctx.Student.Include("StudentAddress")
+                    .Where(s => s.StudentID == 1).FirstOrDefault<Student>();
+                if (student1 != null)
+                {
+                    Console.WriteLine(student1.StudentAddress.City);
+                }
+
+                Console.WriteLine("=================================");
+                // EXPLICIT LOADING
+                student1 = ctx.Student.Where(s => s.StudentID == 1).FirstOrDefault<Student>();
+                if (student1 != null)
+                {
+                    ctx.Entry(student1).Reference(s => s.StudentAddress).Load(); // loads StudentAddress entity
+                    Console.WriteLine(student1.StudentAddress.City);
+                }
+            }
+        }
+
+        private static void CustomValidation()
+        {
+            using (var ctx = new MyDbContext())
+            {
+                ctx.Student.Add(new Student() { StudentName = "K" });
+                try
+                {
+                    ctx.SaveChanges();
+                } catch (Exception exc)
+                {
+                    Console.WriteLine(exc.Message);
+                }
+            }
         }
 
         static void LoggerData()
@@ -55,6 +106,8 @@ namespace EFDBFirstDemo
                         });
                         ctx.SaveChanges();
 
+                        throw new Exception("dummy exception");
+
                         ctx.Student.Add(new Student()
                         {
                             StudentName = "John Smith"
@@ -66,6 +119,12 @@ namespace EFDBFirstDemo
                     {
                         transaction.Rollback();
                         Console.WriteLine(exc.Message);
+                    }
+
+                    var students = ctx.Student.ToList();
+                    foreach (var item in students)
+                    {
+                        Console.WriteLine($"{item.StudentID} - {item.StudentName}");
                     }
                 }
             }
