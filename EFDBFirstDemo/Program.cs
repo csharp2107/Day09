@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace EFDBFirstDemo
 {
@@ -23,8 +24,26 @@ namespace EFDBFirstDemo
             //LoggerData();
             //TransactionsSupport();
             //CustomValidation();
-            LazyEagerExplicitLoading();
+            //LazyEagerExplicitLoading();
+            CacheData();
             Console.ReadKey();
+        }
+
+        private static void CacheData()
+        {
+            using (var ctx = new MyDbContext())
+            {
+                ctx.Database.Log = Console.WriteLine;
+
+                Console.WriteLine("========== CACHE1 ============");
+                var stud = ctx.Student.FromCache().Where(s => s.StudentID == 2).FirstOrDefault();
+                Console.WriteLine(stud.StudentName);
+
+                Console.WriteLine("========== CACHE2 ============");
+                stud = ctx.Student.FromCache().Where(s => s.StudentID == 2).FirstOrDefault();
+                Console.WriteLine(stud.StudentName);
+
+            }
         }
 
         private static void LazyEagerExplicitLoading()
